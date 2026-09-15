@@ -11,9 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-// @ts-expect-error -- JSX module without type declarations
 import { AuthProvider } from "../lib/AuthContext.jsx";
-// @ts-expect-error -- JSX module without type declarations
 import ScrollToTop from "../components/ScrollToTop.jsx";
 
 function NotFoundComponent() {
