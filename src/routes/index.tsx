@@ -1,24 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
+import AuthLanding from "@/pages/AuthLanding.jsx";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Nexus Chat — Private, encrypted messaging" },
+      {
+        name: "description",
+        content:
+          "Nexus Chat is a privacy-first messenger with end-to-end encrypted chats, voice calls, stories and feeds.",
+      },
+      { property: "og:title", content: "Nexus Chat — Private, encrypted messaging" },
+      {
+        property: "og:description",
+        content:
+          "Join Nexus Chat with your unique Nexus number and message friends privately across Android, iOS and the web.",
+      },
+    ],
+  }),
+  component: AuthLanding,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
