@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '../lib/router-compat'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
 export default function Home() {

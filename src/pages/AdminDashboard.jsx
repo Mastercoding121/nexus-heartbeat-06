@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../lib/AuthContext'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
+import { Link } from '../lib/router-compat'
 
 export default function AdminDashboard() {
   const { user } = useAuth()

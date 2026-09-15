@@ -1,6 +1,6 @@
 import { ArrowRightIcon, SparklesIcon, UsersIcon, DevicePhoneMobileIcon, ComputerDesktopIcon, ShieldCheckIcon, MicrophoneIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
 import { Apple } from 'lucide-react' // Keep Apple icon since Heroicons doesn't have it
-import { Link } from 'react-router-dom'
+import { Link } from '../lib/router-compat'
 import Header from '../components/Header'
 import { useTheme } from '../hooks/useTheme'
 

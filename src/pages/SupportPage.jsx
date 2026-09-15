@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '../lib/router-compat'
 import { useAuth } from '../lib/AuthContext'
 import ChatView from '../components/chat/ChatView'
 import { createChat, getChatById, getSupportMessages, startRealtimeListeners, stopRealtimeListeners } from '../lib/persistence'

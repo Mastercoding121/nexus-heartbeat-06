@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from '../lib/router-compat'
 import ChatSidebar from '../components/chat/ChatSidebar'
 import BottomNav from '../components/chat/BottomNav'
 import NotificationStack from '../components/chat/NotificationStack'

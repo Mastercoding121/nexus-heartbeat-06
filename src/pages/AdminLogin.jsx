@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../lib/AuthContext'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from '../lib/router-compat'
 
 export default function AdminLogin() {
   const { adminLogin, user } = useAuth()

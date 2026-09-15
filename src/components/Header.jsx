@@ -1,5 +1,5 @@
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid'
-import { Link } from 'react-router-dom'
+import { Link } from '../lib/router-compat'
 import { useEffect, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { useAuth } from '../lib/AuthContext'

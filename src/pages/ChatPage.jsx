@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from '../lib/router-compat'
 import { useEffect, useState } from 'react'
 import ChatView from '../components/chat/ChatView'
 import { getChatById } from '../lib/persistence'

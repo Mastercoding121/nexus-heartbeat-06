@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '../../lib/router-compat'
 import { ChatBubbleLeftIcon, UserGroupIcon, PlusIcon, XMarkIcon, TrashIcon } from '@heroicons/react/24/solid'
 import Avatar from './Avatar'
 import { createChat, getChats, getContacts, addContact, deleteContact, findMemberByNexusId, formatNexusId } from '../../lib/persistence'

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from '../../lib/router-compat'
 import { MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import ChatListItem from './ChatListItem'
 import { useAuth } from '../../lib/AuthContext'

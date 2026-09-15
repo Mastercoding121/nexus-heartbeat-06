@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from '../lib/router-compat'
 import { useAuth } from '../lib/AuthContext'
 import { useTheme } from '../hooks/useTheme'
 import AuthShell from '../components/AuthShell'

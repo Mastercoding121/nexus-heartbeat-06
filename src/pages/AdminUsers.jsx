@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '../lib/router-compat'
 import { Pencil, Plus, RefreshCw, Search, ShieldCheck, Trash2, UserRoundCheck, UserRoundX, X } from 'lucide-react'
 import { useAuth } from '../lib/AuthContext'
 import { supabase } from '../lib/supabase'

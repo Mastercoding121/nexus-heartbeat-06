@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '../../lib/router-compat'
 import { ChatBubbleLeftRightIcon, UserGroupIcon, UserIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 
 const TABS = [

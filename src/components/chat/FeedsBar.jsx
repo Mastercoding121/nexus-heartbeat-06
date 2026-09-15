@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../lib/router-compat';
 import { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import { UserIcon } from '@heroicons/react/24/solid';

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from '../lib/router-compat'
 import { useSetting } from '../hooks/useSetting'
 import SettingsShell from '../components/chat/settings/SettingsShell'
 import SettingsRow from '../components/chat/settings/SettingsRow'
@@ -9,7 +9,7 @@ import ProfileEdit from '../components/chat/settings/ProfileEdit'
 import Avatar from '../components/chat/Avatar'
 import { useAuth } from '../lib/AuthContext'
 import { ChevronRight, ArrowLeft } from 'lucide-react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from '../lib/router-compat'
 
 function SettingsMenu() {
   const navigate = useNavigate()

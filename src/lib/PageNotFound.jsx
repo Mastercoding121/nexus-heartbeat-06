@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from './router-compat'
 
 export default function PageNotFound() {
   return (
