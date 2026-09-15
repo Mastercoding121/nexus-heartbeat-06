@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Routes, Route } from '../lib/router-compat'
 import { useSetting } from '../hooks/useSetting'
 import SettingsShell from '../components/chat/settings/SettingsShell'
 import SettingsRow from '../components/chat/settings/SettingsRow'
