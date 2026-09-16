@@ -5,15 +5,20 @@ import { createClient } from "@supabase/supabase-js";
  * Configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (or
  * VITE_SUPABASE_PUBLISHABLE_KEY) for the app to talk to your database.
  */
+const DEFAULT_SUPABASE_URL = "https://ozmakhxeotvqvuaytnic.supabase.co";
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_teYLzCRnc1adcwBcv8XdIQ_Xf80ZGt6";
+
 const supabaseUrl =
-  import.meta.env["VITE_SUPABASE_URL"] || import.meta.env["NEXT_PUBLIC_SUPABASE_URL"] || "";
+  import.meta.env["VITE_SUPABASE_URL"] ||
+  import.meta.env["NEXT_PUBLIC_SUPABASE_URL"] ||
+  DEFAULT_SUPABASE_URL;
 
 const supabaseAnonKey =
   import.meta.env["VITE_SUPABASE_ANON_KEY"] ||
   import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
   import.meta.env["NEXT_PUBLIC_SUPABASE_ANON_KEY"] ||
   import.meta.env["NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"] ||
-  "";
+  DEFAULT_SUPABASE_PUBLISHABLE_KEY;
 
 export const supabase =
   supabaseUrl && supabaseAnonKey
