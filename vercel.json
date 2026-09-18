@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "tanstack-start",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".vercel/output",
+  "devCommand": "npm run dev",
+  "regions": ["iad1"],
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path((?!app/|admin/|api/|login|register|forgot-password|reset-password).*)",
+      "destination": "/app/:path",
+      "permanent": false,
+      "has": [
+        {
+          "type": "host",
+          "value": ".*"
+        }
+      ]
+    }
+  ]
+}
