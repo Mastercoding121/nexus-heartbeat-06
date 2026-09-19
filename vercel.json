@@ -5,18 +5,5 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "regions": ["iad1"],
-  "cleanUrls": true,
-  "redirects": [
-    {
-      "source": "/:path((?!app/|admin/|api/|login|register|forgot-password|reset-password).*)",
-      "destination": "/app/:path",
-      "permanent": false,
-      "has": [
-        {
-          "type": "host",
-          "value": ".*"
-        }
-      ]
-    }
-  ]
+  "cleanUrls": true
 }
