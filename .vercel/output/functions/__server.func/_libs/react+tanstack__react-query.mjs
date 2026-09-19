@@ -1,4 +1,4 @@
-import { r as __toESM, t as __commonJSMin } from "../_runtime.mjs";
+import { i as __toESM, t as __commonJSMin } from "../_runtime.mjs";
 import { L as require_react } from "./heroicons__react+react.mjs";
 //#region node_modules/react/cjs/react-jsx-runtime.production.js
 /**

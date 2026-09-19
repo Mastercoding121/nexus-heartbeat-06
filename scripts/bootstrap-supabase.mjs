@@ -59,6 +59,39 @@ const verbose = args.has("--verbose") || process.env.DEBUG === "1";
 const background = args.has("--background") || args.has("--bg") || process.env.BOOTSTRAP_BACKGROUND === "1";
 const verifyOnly = args.has("--verify") || args.has("--check") || args.has("--verify-only");
 
+const isCI = Boolean(
+  process.env.CI ||
+  process.env.VERCEL ||
+  process.env.VERCEL_ENV ||
+  process.env.GITHUB_ACTIONS ||
+  process.env.NETLIFY ||
+  process.env.RENDER
+);
+const HARDTIME_MS = (background || isCI) ? 45_000 : 0;
+if (HARDTIME_MS > 0) {
+  const hardTimer = setTimeout(() => {
+    warn(`Hard timeout of ${HARDTIME_MS}ms reached; forcing exit.`);
+    process.exit(0);
+  }, HARDTIME_MS);
+  try { hardTimer.unref(); } catch {}
+}
+process.on("unhandledRejection", (reason) => {
+  if (background) {
+    warn("Unhandled rejection (ignored, bg mode):", reason?.message || String(reason));
+    process.exit(0);
+  }
+  warn("Unhandled rejection:", reason?.stack || String(reason));
+  process.exitCode = 1;
+});
+process.on("uncaughtException", (error) => {
+  if (background) {
+    warn("Uncaught exception (ignored, bg mode):", error?.message || String(error));
+    process.exit(0);
+  }
+  warn("Uncaught exception:", error?.stack || String(error));
+  process.exitCode = 1;
+});
+
 function getEnv(...candidates) {
   for (const key of candidates) {
     const v = env.get(key);
@@ -231,54 +264,72 @@ if (dryRun) {
 
 async function runSqlViaRpc(statement) {
   const url = `${supabaseUrl}/rest/v1/rpc/exec_sql`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      apikey: anyKey,
-      Authorization: `Bearer ${anyKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify({ query: statement }),
-  });
-  const contentType = res.headers.get("content-type") || "";
-  let body = null;
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 10_000);
   try {
-    body = contentType.includes("application/json") ? await res.json() : await res.text();
-  } catch {
-    body = await res.text();
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        apikey: anyKey,
+        Authorization: `Bearer ${anyKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify({ query: statement }),
+      signal: controller.signal,
+    });
+    const contentType = res.headers.get("content-type") || "";
+    let body = null;
+    try {
+      body = contentType.includes("application/json") ? await res.json() : await res.text();
+    } catch {
+      body = await res.text();
+    }
+    if (!res.ok) {
+      const msg = typeof body === "object" ? body?.message || body?.error || JSON.stringify(body) : String(body || res.statusText);
+      return { ok: false, status: res.status, message: msg };
+    }
+    return { ok: true, status: res.status, data: body };
+  } catch (err) {
+    return { ok: false, status: 0, message: err?.name === "AbortError" ? "timeout" : String(err?.message || err) };
+  } finally {
+    clearTimeout(t);
   }
-  if (!res.ok) {
-    const msg = typeof body === "object" ? body?.message || body?.error || JSON.stringify(body) : String(body || res.statusText);
-    return { ok: false, status: res.status, message: msg };
-  }
-  return { ok: true, status: res.status, data: body };
 }
 
 async function runSqlViaQueryRpc(statement) {
   const url = `${supabaseUrl}/rest/v1/rpc/query`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      apikey: anyKey,
-      Authorization: `Bearer ${anyKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify({ q: statement }),
-  });
-  const contentType = res.headers.get("content-type") || "";
-  let body = null;
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 10_000);
   try {
-    body = contentType.includes("application/json") ? await res.json() : await res.text();
-  } catch {
-    body = await res.text();
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        apikey: anyKey,
+        Authorization: `Bearer ${anyKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify({ q: statement }),
+      signal: controller.signal,
+    });
+    const contentType = res.headers.get("content-type") || "";
+    let body = null;
+    try {
+      body = contentType.includes("application/json") ? await res.json() : await res.text();
+    } catch {
+      body = await res.text();
+    }
+    if (!res.ok) {
+      const msg = typeof body === "object" ? body?.message || body?.error || JSON.stringify(body) : String(body || res.statusText);
+      return { ok: false, status: res.status, message: msg };
+    }
+    return { ok: true, status: res.status, data: body };
+  } catch (err) {
+    return { ok: false, status: 0, message: err?.name === "AbortError" ? "timeout" : String(err?.message || err) };
+  } finally {
+    clearTimeout(t);
   }
-  if (!res.ok) {
-    const msg = typeof body === "object" ? body?.message || body?.error || JSON.stringify(body) : String(body || res.statusText);
-    return { ok: false, status: res.status, message: msg };
-  }
-  return { ok: true, status: res.status, data: body };
 }
 
 async function probeExecSql() {

@@ -1,29 +1,8 @@
+import { i as createMiddleware, r as createCsrfMiddleware } from "../_libs/@tanstack/react-start+[...].mjs";
+import { t as createStart } from "../_libs/tanstack__start-client-core.mjs";
+import { t as renderErrorPage } from "../index.mjs";
 import { t as createClient } from "../_libs/supabase__supabase-js.mjs";
-import { n as createMiddleware, r as renderErrorPage, t as createCsrfMiddleware } from "./error-page-nWROVIJU.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/start-Dxvtx5ju.js
-function dedupeSerializationAdapters(deduped, serializationAdapters) {
-	for (let i = 0, len = serializationAdapters.length; i < len; i++) {
-		const current = serializationAdapters[i];
-		if (!deduped.has(current)) {
-			deduped.add(current);
-			if (current.extends) dedupeSerializationAdapters(deduped, current.extends);
-		}
-	}
-}
-var createStart = (getOptions) => {
-	return {
-		getOptions: async () => {
-			const options = await getOptions();
-			if (options.serializationAdapters) {
-				const deduped = /* @__PURE__ */ new Set();
-				dedupeSerializationAdapters(deduped, options.serializationAdapters);
-				options.serializationAdapters = Array.from(deduped);
-			}
-			return options;
-		},
-		createMiddleware
-	};
-};
+//#region src/lib/supabase-admin.ts
 var DEFAULT_SUPABASE_URL = "https://ozmakhxeotvqvuaytnic.supabase.co";
 var DEFAULT_SUPABASE_ANON_KEY = "sb_publishable_teYLzCRnc1adcwBcv8XdIQ_Xf80ZGt6";
 function getEnv(key, fallback = "") {
@@ -137,6 +116,8 @@ function jsonResponse(data, status = 200, extraHeaders = {}) {
 function errorResponse(status, message) {
 	return jsonResponse({ error: message }, status);
 }
+//#endregion
+//#region src/lib/admin-api-router.ts
 var ADMIN_SELECT_FIELDS = "id, member_id, nexus_id, first_name, last_name, full_name, email, role, wallet_balance, avatar_url, is_active, last_seen_at, created_at, auth_user_id, profile_id";
 var FEEDS_SELECT_FIELDS = "id, profile_id, user_name, user_avatar, content, type, status, is_admin_post, likes, comments, created_at";
 function normalizeCommentsCount(comments) {
@@ -572,6 +553,8 @@ async function handleAdminApiRequest(request, url) {
 	}
 	return errorResponse(404, `Admin API endpoint not found: ${path}`);
 }
+//#endregion
+//#region src/start.ts
 var adminApiMiddleware = createMiddleware().server(async ({ next, request }) => {
 	try {
 		const url = new URL(request.url, "http://localhost");

@@ -5,13 +5,25 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
 import path from "node:path";
 
+const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV);
+
 export default defineConfig({
   plugins: [
     tanstackStart(),
     react(),
     tailwindcss(),
     nitro({
-      preset: process.env.VERCEL ? "vercel" : undefined,
+      preset: isVercel ? "vercel" : undefined,
+      vercel: {
+        functions: {
+          runtime: "nodejs22.x",
+        },
+      },
+      esbuild: {
+        options: {
+          target: "node20",
+        },
+      },
     }),
   ],
   resolve: {
@@ -30,7 +42,7 @@ export default defineConfig({
     ssr: {
       build: {
         rollupOptions: {
-          input: "./server.ts",
+          input: "./src/server.ts",
         },
       },
     },

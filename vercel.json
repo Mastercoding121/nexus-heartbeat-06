@@ -3,7 +3,11 @@
   "outputDirectory": ".vercel/output",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "regions": ["iad1"],
-  "cleanUrls": true
+  "framework": null,
+  "functions": {
+    ".vercel/output/functions/__server.func": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  }
 }

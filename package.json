@@ -3,6 +3,9 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "engines": {
+    "node": ">=20.x"
+  },
   "scripts": {
     "bootstrap": "node scripts/bootstrap-supabase.mjs",
     "bootstrap:dry-run": "node scripts/bootstrap-supabase.mjs --dry-run",
