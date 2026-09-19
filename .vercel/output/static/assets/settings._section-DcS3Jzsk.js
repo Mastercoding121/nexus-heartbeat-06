@@ -1,0 +1,1 @@
+import{t as e}from"./SettingsPage-5_8QA-bk.js";var t=e;export{t as component};
